@@ -1,5 +1,27 @@
+<spinner [visible]="isLoading"></spinner>
 <div class="col-md-6">
     <ul class="list-group">
-        <li *ngFor="#room of rooms" class="list-group-item">{{room.name}}</li>
+        <li *ngFor="#room of rooms" class="list-group-item" [class.disabled]="room.full" (click)="roomSelected(room)">{{room.name}}</li>
     </ul>
+</div>
+<div class="col-md-6">
+  <div class="panel panel-default" *ngIf="selectedRoom">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{selectedRoom.name}}</h3>
+  </div>
+  <div class="panel-body">
+    {{selectedRoom.description}}
+    <hr/>
+    Select one or more schedule:
+    <form>
+        <div class="checkbox" *ngFor="#slot of selectedRoom.slots" [class.disabled]="slot.booked">
+        <label>
+            <input type="checkbox" value="" [disabled]="slot.booked">
+            {{slot.start}} - {{slot.end}}
+        </label>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
 </div>
